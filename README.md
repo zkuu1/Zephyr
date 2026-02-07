@@ -1,74 +1,69 @@
-# REST API Example with Hono & Prisma
+<h1>Zephyr</h1>
+<img src="https://raw.githubusercontent.com/zkuu1/zkuu1/refs/heads/main/zephyr.jfif" width="400px" ></img>
+<p>Zephyr is a simple or maybe mini bot, yeah thats my mini project :3 </p>
+<h2>Tech</h2>
+<p>Hono API for endpoint and baileys for whatsapp bot library.</p>
 
-This example shows how to implement a **REST API with TypeScript** using [Hono](https://hono.dev/) and [Prisma Client](https://www.prisma.io/docs/concepts/components/prisma-client). It connects to a Postgres database via the [`@prisma/adapter-pg`](https://www.prisma.io/docs/orm/overview/databases/postgresql/pg-driver-adapter) driver adapter and a normal `postgresql://` connection string (no Accelerate/Data Proxy required).
+<h3>Command</h3>
+<p>SFW Anime - Safe For Watch</p>
+<pre><code class="language-bash">
+- /anime [ Generate random anime image ]
+- /anime neko [ Generate neko anime image ]
+- /anime megumin [ Generate megumin anime image ]
+- /anime neko [ Generate neko anime image ]
+- /anime shinobu [ Generate shinobu anime image ]
+- /anime bully [ Generate bully anime image ]
+- /anime cuddle [ Generate cuddle anime image ]
+- /anime cry [ Generate cry anime image ]
+- /anime hug [ Generate hug anime image ]
+- /anime awoo [ Generate awoo anime image ]
+- /anime kiss [ Generate kiss anime image ]
+- /anime lick [ Generate lick anime image ]
+- /anime smug [ Generate smug anime image ]
+- /anime pat [ Generate pat anime image ]
+- /anime bonk [ Generate bonk anime image ]
+- /anime yeet [ Generate yeet anime image ]
+- /anime blush [ Generate blush anime image ]
+- /anime smile [ Generate smile anime image ]
+- /anime wave [ Generate wave anime image ]
+- /anime highfive [ Generate highfive anime image ]
+- /anime handhold [ Generate handhold anime image ]
+- /anime nom [ Generate nom anime image ]
+- /anime bite [ Generate bite anime image ]
+- /anime slap [ Generate slap anime image ]
+- /anime kill [ Generate kill anime image ]
+- /anime kick [ Generate kick anime image ]
+- /anime happy [ Generate happy anime image ]
+- /anime wink [ Generate wink anime image ]
+- /anime poke [ Generate poke anime image ]
+- /anime dance [ Generate dance anime image ]
+- /anime cringe [ Generate cringe anime image ]
+</code></pre>
 
-## Project structure
+<p>NSFW Anime - Not Safe For Watch</p>
+<pre><code class="language-bash">
+- /anime [ Generate random NSFW anime image ]
+- /anime neko [ Generate neko NSFW anime image ]
+- /anime trap [ Generate trap NSFW anime image ]
+- /anime blowjob [ Generate blowjob NSFW anime image ]
+</code></pre>
 
-- `src/index.ts` – defines the Hono server and the REST routes (`/signup`, `/post`, `/feed`, …).
-- `src/lib/prisma.ts` – lightweight middleware that creates a Prisma Client using `@prisma/adapter-pg` and exposes it via Hono’s context.
-- `prisma/schema.prisma` – Prisma schema with the `User` and `Post` models that back the API.
-- `prisma/seed.ts` – seeds the database with sample users and posts.
+<h2>Endpoint</h2>
 
-## Getting started
+```json
+{
+  GET http://localhost:3000/anime
+}
+```
+<h2>Response</h2>
 
-### 1. Download the example and install dependencies
-
-```bash
-npx try-prisma@latest --template orm/hono --name hono
-cd hono
-bun install
+```json
+{
+  "url": "https://i.waifu.pics/eRKDedk.jpg"
+}
 ```
 
-> Alternatively clone this repo and run `bun install` inside `prisma-examples/orm/hono`.
 
-### 2. Configure `DATABASE_URL`
 
-Create a Postgres database (Prisma Postgres, Supabase, Railway, Docker, etc.) and copy the direct connection string:
 
-```
-postgresql://USER:PASSWORD@HOST:PORT/DATABASE?sslmode=require
-```
 
-Create a `.env` file in the project root and add the URL:
-
-```bash
-touch .env
-
-# .env
-DATABASE_URL="postgresql://USER:PASSWORD@HOST:5432/DATABASE?sslmode=require"
-```
-
-### 3. Migrate & seed the database
-
-```bash
-bunx prisma migrate dev --name init
-bunx prisma db seed
-```
-
-This creates the tables defined in [`prisma/schema.prisma`](./prisma/schema.prisma) and runs [`prisma/seed.ts`](./prisma/seed.ts) to insert demo data.
-
-### 4. Start the REST API server
-
-```bash
-bun run dev
-```
-
-The server listens on `http://localhost:3000`. Example requests:
-
-- `POST /signup` – create a user (and optional posts).
-- `POST /post` – create a post for an existing user.
-- `PUT /publish/:id` – toggle the `published` flag.
-- `GET /users` – list all users with their posts.
-- `GET /feed?searchString=hello&take=5` – filter/paginate published posts.
-
-Each route pulls the Prisma Client from the Hono context via `withPrisma`, so a single client instance is reused per request.
-
-## Switch to another database
-
-If you want to try this example with another database, refer to the [Databases](https://www.prisma.io/docs/orm/overview/databases) section in the Prisma docs.
-
-## Next steps
-
-- Check out the [Prisma docs](https://www.prisma.io/docs)
-- Share feedback on the [Prisma Discord](https://pris.ly/discord/)
-- Create issues or ask questions on [GitHub](https://github.com/prisma/prisma/)
