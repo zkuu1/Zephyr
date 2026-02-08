@@ -16,19 +16,13 @@ import { bindMessageHandler } from './bot.js'
 import { animeRoutes } from './routes/anime.routes.js'
 import { indexRoutes } from './routes/index.routes.js'
 
-/* =========================
-   Hono App
-========================= */
 
 const app = new Hono()
 
 
-
+// routes
 app.route('/anime', animeRoutes)
 app.route('/', indexRoutes)
-/* =========================
-   WhatsApp Starter
-========================= */
 
 let sock: WASocket | null = null
 
@@ -47,24 +41,18 @@ async function startWhatsApp() {
 
   sock.ev.on('creds.update', saveCreds)
 
-  // bind command/message handler
   bindMessageHandler(sock)
 
   sock.ev.on('connection.update', (update) => {
     const { connection, lastDisconnect, qr } = update
 
-    /* ===== QR ===== */
     if (qr) {
       console.log('\n📱 Scan QR berikut:\n')
       qrcode.generate(qr, { small: true })
     }
-
-    /* ===== CONNECTED ===== */
     if (connection === 'open') {
       console.log(' WhatsApp connected\n')
     }
-
-    /* ===== CLOSED ===== */
     if (connection === 'close') {
       const code =
         (lastDisconnect?.error as any)?.output?.statusCode
@@ -83,10 +71,6 @@ async function startWhatsApp() {
     }
   })
 }
-
-/* =========================
-   Main Bootstrap
-========================= */
 
 async function main() {
   await startWhatsApp()

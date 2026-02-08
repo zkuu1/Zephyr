@@ -44,7 +44,8 @@ export const introText =
 /nsfw trap
 /nsfw blowjob
 
-2. Help & Info
-/help                
+2.Sticker Section
+/sticker - reply image message to create sticker
+/stickeryrl - <image_url> - create sticker from image URL              
 
 Feel free to explore and have fun!`
