@@ -55,6 +55,24 @@
   GET http://localhost:3000/anime
 }
 ```
+
+```json
+{
+  GET http://localhost:3000/anime/{name}
+}
+```
+
+```json
+{
+  GET http://localhost:3000/anime/nsfw
+}
+```
+
+```json
+{
+  GET http://localhost:3000/anime/nsfw/{name}
+}
+```
 <h2>Response</h2>
 
 ```json
