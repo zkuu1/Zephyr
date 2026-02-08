@@ -1,5 +1,8 @@
+import { url } from "inspector/promises"
+
 const BASE = process.env.ANIME_API_BASE
 const DEFAULT = process.env.ANIME_API
+const NSFW = process.env.ANIME_API_NSFW
 
 function ensureUrl(url: string | undefined, name: string): string {
   if (!url) {
@@ -56,4 +59,37 @@ export async function getAnime(
   }
 
   return data.url
+  
 }
+
+
+/* =========================
+   NSFW
+========================= */  
+
+export async function getNsfwAnime(
+  category: string = 'waifu'
+): Promise<string> {
+
+  const base = ensureUrl(NSFW, 'ANIME_API_NFSW')
+
+  const url =
+    `${base}/${encodeURIComponent(category)}`
+
+  const res = await fetch(url)
+
+  if (!res.ok) {
+    throw new Error(`Anime API error ${res.status}`)
+  }
+
+  const data = await res.json()
+
+  if (!data.url) {
+    throw new Error('Invalid anime API response')
+  }
+
+  return data.url
+  
+}
+
+

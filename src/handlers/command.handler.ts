@@ -1,4 +1,4 @@
-import { animeCommand } from '../commands/anime.js'
+import { animeCommand, nsfwAnimeCommand} from '../commands/anime.js'
 import { introCommand } from '../commands/intro.js'
 
 export async function handleCommand(
@@ -13,8 +13,13 @@ export async function handleCommand(
       break
   }
   switch (command) {
-    case 'intro':
+    case 'menu':
       await introCommand(sock, msg, args)
+      break
+  }
+  switch (command) {
+    case 'nsfw':
+      await nsfwAnimeCommand (sock, msg, args)
       break
   }
 }

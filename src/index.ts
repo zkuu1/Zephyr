@@ -11,7 +11,10 @@ import pino from 'pino'
 import qrcode from 'qrcode-terminal'
 
 import { bindMessageHandler } from './bot.js'
-import { getAnime } from './services/anime.service.js'
+
+// IMPORT ROUTES
+import { animeRoutes } from './routes/anime.routes.js'
+import { indexRoutes } from './routes/index.routes.js'
 
 /* =========================
    Hono App
@@ -19,19 +22,10 @@ import { getAnime } from './services/anime.service.js'
 
 const app = new Hono()
 
-app.get('/', c => {
-  return c.json({
-    status: 'ok',
-    service: 'Zephyr WA Bot'
-  })
-})
 
-app.get('/anime', async c => {
-  const cat = c.req.query('cat') ?? 'waifu'
-  const url = await getAnime(cat)
-  return c.json({ url })
-})
 
+app.route('/anime', animeRoutes)
+app.route('/', indexRoutes)
 /* =========================
    WhatsApp Starter
 ========================= */
