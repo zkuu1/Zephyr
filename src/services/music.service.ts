@@ -1,31 +1,42 @@
-import axios from 'axios'
+
 
 const BASE = process.env.MUSIC_API_BASE 
 
-// Random music → misal trending
-export async function getRandomMusic() {
-  try {
-    const res = await axios.get(`${BASE}/top/trending`)
-    if (!res.data || res.data.length === 0) throw new Error('No music found')
-    
-    // ambil 1 lagu random dari list
-    const randomIndex = Math.floor(Math.random() * res.data.length)
-    return res.data[randomIndex]
-  } catch (err) {
-    throw new Error('Failed to fetch random music')
-  }
+
+export async function searchMusic(query: string) {
+  const base = process.env.MUSIC_API_BASE!
+  const res = await fetch(`${base}/search/songs?query=${encodeURIComponent(query)}`)
+  const json = await res.json()
+  return json.data.results
 }
 
-// Search music by keyword
-export async function searchMusic(keyword: string) {
-  try {
-    const res = await axios.get(`${BASE}/search`, {
-      params: { query: keyword }
-    })
-    if (!res.data || !res.data.results) throw new Error('No results found')
-    
-    return res.data.results
-  } catch (err) {
-    throw new Error('Failed to search music')
+
+export async function getSongAudio(id: string): Promise<string> {
+  // ⚠️ endpoint DETAIL, bukan search
+  const res = await fetch(`https://saavn.me/songs?id=${id}`)
+  const json = await res.json()
+
+  // biasanya response berbentuk array
+  const song = Array.isArray(json.data) ? json.data[0] : json.data
+
+  if (!song || !song.downloadUrl) {
+    throw new Error("Download URL missing")
   }
+
+  const best =
+    song.downloadUrl.find((d: any) => d.quality === "320kbps") ??
+    song.downloadUrl[song.downloadUrl.length - 1]
+
+  return best.url
+}
+
+
+export async function getRandomMusic() {
+  const randomWords = ['love', 'night', 'sad', 'happy', 'dream']
+  const keyword = randomWords[Math.floor(Math.random() * randomWords.length)]
+
+  const songs = await searchMusic(keyword)
+  const randomSong = songs[Math.floor(Math.random() * songs.length)]
+
+  return randomSong.id
 }

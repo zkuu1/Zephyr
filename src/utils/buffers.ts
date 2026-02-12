@@ -3,6 +3,7 @@ import { writeFileSync } from 'fs'
 import { execSync } from 'child_process'
 import axios from 'axios'
 import sharp from 'sharp'
+import { fetchAudioFromApi } from '../data/music.data.js'
 
 
 export async function bufferToWebp(buffer: Buffer): Promise<Buffer> {
@@ -26,4 +27,16 @@ export async function imageToWebp(url: string): Promise<Buffer> {
 
     const webpBuffer = Buffer.from(await import('fs').then(fs => fs.promises.readFile(tmpOutput)))
     return webpBuffer
+}
+
+export async function fetchAudioBuffer(songId: string) {
+  const res = await fetch(songId, {
+    headers: {
+      'User-Agent': 'Mozilla/5.0'
+    }
+  })
+
+  if (!res.ok) throw new Error('Failed to fetch audio')
+
+  return Buffer.from(await res.arrayBuffer())
 }
