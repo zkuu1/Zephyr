@@ -15,6 +15,7 @@ import { bindMessageHandler } from './bot.js'
 // IMPORT ROUTES
 import { animeRoutes } from './routes/anime.routes.js'
 import { indexRoutes } from './routes/index.routes.js'
+import { musicRoutes } from './routes/music.routes.js'
 
 
 const app = new Hono()
@@ -23,6 +24,7 @@ const app = new Hono()
 // routes
 app.route('/anime', animeRoutes)
 app.route('/', indexRoutes)
+app.route('/music', musicRoutes)
 
 let sock: WASocket | null = null
 
